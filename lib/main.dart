@@ -24,37 +24,42 @@ class _MyApp2State extends State<MyApp2> {
           title: const Text('타이틀'),
         ),
         body: Center(
-            child: SizedBox(
-          width: double.infinity, // full width
-          height: double.infinity,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CupertinoButton(
-                  color: Colors.pink,
-                  onPressed: () {
-                    setState(() {
-                      // setState(){} => notice app widget is going to be changed
-                      buttonName = 'Clicked~!';
-                    });
-                  },
-                  child: Text(buttonName)),
-              CupertinoButton(
-                  color: Colors.pink,
-                  onPressed: () {
-                    setState(() {
-                      // setState(){} => notice app widget is going to be changed
-                      buttonName = 'Clicked~!';
-                    });
-                  },
-                  child: Text(buttonName)),
-            ],
-          ),
-        )),
+            child: currentIndex == 0
+                ? Container(
+                    color: Colors.orange,
+                    width: double.infinity, // full width
+                    height: double.infinity,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                onPrimary: Colors.white, primary: Colors.pink),
+                            onPressed: () {
+                              setState(() {
+                                // setState(){} => notice app widget is going to be changed
+                                buttonName = 'Clicked~!';
+                              });
+                            },
+                            child: Text(buttonName)),
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                // setState(){} => notice app widget is going to be changed
+                                buttonName = 'Clicked~!';
+                              });
+                            },
+                            child: Text(buttonName)),
+                      ],
+                    ),
+                  )
+                : Image.asset('images/fire.jpeg')),
         bottomNavigationBar: BottomNavigationBar(
-          fixedColor: Colors.pink,
+          backgroundColor: Colors.pink,
+          unselectedItemColor: Colors.white70,
+          fixedColor: Colors.white,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
