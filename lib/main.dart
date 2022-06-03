@@ -26,9 +26,11 @@ class _MyApp2State extends State<MyApp2> {
         body: Center(
             child: SizedBox(
           width: double.infinity, // full width
-          child: Column(
+          height: double.infinity,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CupertinoButton(
                   color: Colors.pink,
