@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'next_page/next_page.dart';
 
 void main() => runApp(const MyApp2());
 
@@ -29,9 +30,10 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  String buttonName = 'Click!!';
+  bool _clickedButton = false;
   String nextPageName = 'Next page';
   int currentIndex = 0;
+  bool _isClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,36 +43,47 @@ class _FirstPageState extends State<FirstPage> {
         title: const Text('타이틀'),
       ),
       body: Center(
-          child: currentIndex == 0
-              ? Container(
-                  color: Colors.orange,
-                  width: double.infinity, // full width
-                  height: double.infinity,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              onPrimary: Colors.white, primary: Colors.pink),
-                          onPressed: () {
-                            setState(() {
-                              // setState(){} => notice app widget is going to be changed
-                              buttonName = 'Clicked~!';
-                            });
-                          },
-                          child: Text(buttonName)),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const SecondPage()));
-                          },
-                          child: Text(nextPageName)),
-                    ],
-                  ),
-                )
-              : Image.asset('images/fire.jpeg')),
+        child: currentIndex == 0
+            ? Container(
+                color: Colors.orange,
+                width: double.infinity, // full width
+                height: double.infinity,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            onPrimary: Colors.white, primary: Colors.pink),
+                        onPressed: () {
+                          setState(() {
+                            // setState(){} => notice app widget is going to be changed
+                            _clickedButton = !_clickedButton;
+                          });
+                        },
+                        child: Text(
+                            _clickedButton == true ? 'Clicked~!' : 'Click')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const NextPage()));
+                        },
+                        child: Text(nextPageName)),
+                  ],
+                ),
+              )
+            : GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isClicked = !_isClicked;
+                  });
+                },
+                child: _isClicked
+                    ? Image.asset('images/fire.jpeg')
+                    : Image.network('http://www.mandysam.com/img/random.jpg'),
+              ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.pink,
         unselectedItemColor: Colors.white70,
@@ -94,20 +107,5 @@ class _FirstPageState extends State<FirstPage> {
         currentIndex: currentIndex,
       ),
     ); // home argument
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('타이틀2'),
-        backgroundColor: Colors.pink,
-        automaticallyImplyLeading: true,
-      ),
-    );
   }
 }
